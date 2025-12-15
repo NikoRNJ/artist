@@ -1,0 +1,7 @@
+{
+  "name": "Ink & Fade - Artist Booking System",
+  "description": "A premium appointment and management platform specifically designed for Barbers and Tattoo Artists, featuring real-time availability, portfolio management, and AI-driven marketing tools.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
