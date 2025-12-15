@@ -9,7 +9,7 @@ type MarketingCopyBody = {
   artistName?: string;
 };
 
-const FALLBACK_COPY = 'Your appointment is coming up! We look forward to seeing you at Ink & Fade.';
+const FALLBACK_COPY = '¡Tu cita se acerca! Te esperamos en Ink & Fade.';
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as MarketingCopyBody;
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   const artistName = (body.artistName ?? '').trim();
 
   if (!serviceName || !artistName) {
-    return NextResponse.json({ error: 'Missing serviceName or artistName' }, { status: 400 });
+    return NextResponse.json({ error: 'Falta serviceName o artistName' }, { status: 400 });
   }
 
   if (!GEMINI_API_KEY) {
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `Generate a short, punchy marketing SMS/Email reminder for a ${serviceName} appointment with ${artistName}. Keep it professional but edgy for a tattoo/barber shop.`,
+      contents: `Genera un recordatorio breve y contundente (SMS/Email) para una cita de ${serviceName} con ${artistName}. Escríbelo en español. Mantén un tono profesional pero con carácter, propio de un estudio de barbería/tatuajes.`,
       config: {
         temperature: 0.8,
         maxOutputTokens: 100,
@@ -41,4 +41,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ text: FALLBACK_COPY }, { status: 200 });
   }
 }
-

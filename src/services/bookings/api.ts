@@ -9,6 +9,8 @@ export type CreateBookingInput = {
   status?: BookingStatus;
 };
 
+export type OccupiedSlot = { start: string; end: string };
+
 export async function createBooking(input: CreateBookingInput): Promise<{ id: string } | null> {
   const response = await fetch('/api/bookings', {
     method: 'POST',
@@ -25,3 +27,20 @@ export async function createBooking(input: CreateBookingInput): Promise<{ id: st
   return { id: data.id };
 }
 
+export async function getArtistAvailability(artistId: string, date: string): Promise<OccupiedSlot[]> {
+  const params = new URLSearchParams({ artistId, date });
+  const response = await fetch(`/api/availability?${params.toString()}`);
+
+  if (!response.ok) {
+    return [];
+  }
+
+  const data = (await response.json()) as unknown;
+  if (!Array.isArray(data)) return [];
+
+  return data.filter((item): item is OccupiedSlot => {
+    if (!item || typeof item !== 'object') return false;
+    const slot = item as Partial<OccupiedSlot>;
+    return typeof slot.start === 'string' && typeof slot.end === 'string';
+  });
+}

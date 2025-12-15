@@ -18,21 +18,21 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as CreateBookingBody;
 
   if (!body.artistId || !body.startTime) {
-    return NextResponse.json({ error: 'Missing artistId or startTime' }, { status: 400 });
+    return NextResponse.json({ error: 'Falta artistId o startTime' }, { status: 400 });
   }
 
   if (!isUuid(body.artistId)) {
-    return NextResponse.json({ error: 'Invalid artistId' }, { status: 400 });
+    return NextResponse.json({ error: 'artistId inválido' }, { status: 400 });
   }
 
   const parsedStartTime = Date.parse(body.startTime);
   if (Number.isNaN(parsedStartTime)) {
-    return NextResponse.json({ error: 'Invalid startTime' }, { status: 400 });
+    return NextResponse.json({ error: 'startTime inválido' }, { status: 400 });
   }
 
   const supabase = createSupabaseServiceClient() ?? createSupabaseServerClient();
   if (!supabase) {
-    return NextResponse.json({ error: 'Supabase is not configured' }, { status: 501 });
+    return NextResponse.json({ error: 'Supabase no está configurado' }, { status: 501 });
   }
 
   const serviceId = body.serviceId && isUuid(body.serviceId) ? body.serviceId : null;
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     .insert({
       artist_id: body.artistId,
       service_id: serviceId,
-      client_name: body.clientName ?? 'Guest User',
+      client_name: body.clientName ?? 'Usuario invitado',
       start_time: body.startTime,
       status: body.status ?? 'PENDING',
       deposit_paid: body.depositPaid ?? false,

@@ -23,7 +23,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
           <img
             src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&q=80&w=1200"
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            alt="Studio banner"
+            alt="Banner del estudio"
           />
         </div>
 
@@ -43,7 +43,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
                 <MapPin size={18} /> {artist.location}
               </span>
               <span className="flex items-center gap-1 text-green-500">
-                <CheckCircle size={18} /> Verified Professional
+                <CheckCircle size={18} /> Profesional verificado
               </span>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
               onClick={() => setShowBooking(true)}
               className="px-8 py-3 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20 active:scale-95"
             >
-              Book Now
+              Reservar ahora
             </button>
           </div>
         </div>
@@ -64,7 +64,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
       <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-12">
           <section>
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">About The Artist</h3>
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">Sobre el artista</h3>
             <p className="text-gray-400 leading-relaxed text-lg italic">"{artist.bio}"</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {artist.styles.map((style) => (
@@ -80,9 +80,9 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
 
           <section>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold">Portfolio</h3>
+              <h3 className="text-xl font-bold">Portafolio</h3>
               <button className="text-amber-500 text-sm flex items-center gap-1 hover:underline">
-                View all on Instagram <ExternalLink size={14} />
+                Ver todo en Instagram <ExternalLink size={14} />
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -109,7 +109,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
           </section>
 
           <section>
-            <h3 className="text-xl font-bold mb-6">Verified Reviews</h3>
+            <h3 className="text-xl font-bold mb-6">Reseñas verificadas</h3>
             <div className="space-y-6">
               {reviews.map((review) => (
                 <div key={review.id} className="p-6 bg-white/5 border border-white/5 rounded-2xl">
@@ -134,7 +134,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
 
         <div className="space-y-6">
           <div className="sticky top-24 p-6 bg-[#111] border border-white/5 rounded-3xl">
-            <h3 className="text-xl font-bold mb-6">Service Menu</h3>
+            <h3 className="text-xl font-bold mb-6">Menú de servicios</h3>
             <div className="space-y-4">
               {artist.services.map((service) => (
                 <div
@@ -154,7 +154,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
                       <Clock size={12} /> {service.duration} min
                     </span>
                     <span className="flex items-center gap-1">
-                      <CheckCircle size={12} /> ${service.deposit} deposit
+                      <CheckCircle size={12} /> ${service.deposit} de depósito
                     </span>
                   </div>
                   <p className="text-xs text-gray-400 line-clamp-2">{service.description}</p>
@@ -164,8 +164,8 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
 
             <div className="mt-8 pt-6 border-t border-white/10 space-y-4">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">Next Available</span>
-                <span className="text-green-500 font-medium">Tomorrow, 10:00 AM</span>
+                <span className="text-gray-500">Próxima disponibilidad</span>
+                <span className="text-green-500 font-medium">Mañana, 10:00 AM</span>
               </div>
               <button
                 onClick={() => {
@@ -176,7 +176,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
                 }}
                 className="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
               >
-                <CalendarIcon size={18} /> Reserve a Slot
+                <CalendarIcon size={18} /> Reservar un turno
               </button>
             </div>
           </div>
