@@ -121,7 +121,7 @@ const ClientView: React.FC<ClientViewProps> = ({ artist, reviews }) => {
                     <span className="text-xs text-gray-500">{review.date}</span>
                   </div>
                   <div className="flex gap-1 mb-3 text-amber-500">
-                    {[...Array(5)].map((_, i) => (
+                    {Array.from({ length: 5 }, (_, i) => (
                       <Star key={i} size={14} fill={i < review.rating ? 'currentColor' : 'none'} />
                     ))}
                   </div>

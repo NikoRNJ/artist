@@ -169,14 +169,16 @@ function generateAvailableSlots(
     settings.timezone
   );
 
-  // Parse existing bookings into Date ranges
-  const bookedRanges = existingBookings
-    .filter(b => b.status !== 'CANCELLED')
-    .map(b => ({
-      start: new Date(b.start_time),
-      end: new Date(b.end_time),
-    }))
-    .filter(r => !Number.isNaN(r.start.getTime()) && !Number.isNaN(r.end.getTime()));
+  // Parse existing bookings into Date ranges (optimized single-pass)
+  const bookedRanges = existingBookings.reduce<Array<{ start: Date; end: Date }>>((acc, b) => {
+    if (b.status === 'CANCELLED') return acc;
+    const start = new Date(b.start_time);
+    const end = new Date(b.end_time);
+    if (!Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime())) {
+      acc.push({ start, end });
+    }
+    return acc;
+  }, []);
 
   // Calculate minimum allowed booking time (advance hours requirement)
   const now = new Date();
