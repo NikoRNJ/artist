@@ -180,26 +180,25 @@ const BookingModal: React.FC<BookingModalProps> = ({ artistId, service, onClose 
     }
   };
 
-  // Group slots by time period
+  // Group slots by time period (optimized single-pass)
   const groupedSlots = useMemo(() => {
-    const morning: AvailableSlot[] = [];
-    const afternoon: AvailableSlot[] = [];
-    const evening: AvailableSlot[] = [];
+    return slots.reduce<{ morning: AvailableSlot[]; afternoon: AvailableSlot[]; evening: AvailableSlot[] }>(
+      (acc, slot) => {
+        const date = new Date(slot.start);
+        const hours = date.getUTCHours();
 
-    slots.forEach((slot) => {
-      const date = new Date(slot.start);
-      const hours = date.getUTCHours();
+        if (hours < 12) {
+          acc.morning.push(slot);
+        } else if (hours < 17) {
+          acc.afternoon.push(slot);
+        } else {
+          acc.evening.push(slot);
+        }
 
-      if (hours < 12) {
-        morning.push(slot);
-      } else if (hours < 17) {
-        afternoon.push(slot);
-      } else {
-        evening.push(slot);
-      }
-    });
-
-    return { morning, afternoon, evening };
+        return acc;
+      },
+      { morning: [], afternoon: [], evening: [] }
+    );
   }, [slots]);
 
   const hasSlots = slots.length > 0;
